@@ -103,6 +103,24 @@ app.patch('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+app.delete('/api/v1/tours/:id', (req, res) => {
+  console.log(req.params);
+  const id = req.params.id * 1;
+  if (id > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: {
+      tours: null,
+    },
+  });
+});
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`running on port: ${port}.....`);
