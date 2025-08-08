@@ -164,11 +164,9 @@ const deleteUser = (req, res) => {
 // Routes
 
 //creating a new middleware for easy read and solveable routing sollution
-const tourRouter = express.Router();
 const userRouter = express.Router();
 
-tourRouter.route('/').get(getAllTours).post(newTour);
-tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
 userRouter.route('/').get(getAllUsers).post(createUser);
 userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
