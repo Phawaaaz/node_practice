@@ -4,6 +4,17 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+exports.checkID = (req, res, next, val) => {
+  console.log(`Tour ID is: ${val}`);
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  next();
+};
+
 exports.getAllTours = (req, res) => {
   console.log(req.requestTime);
   res.status(200).json({
@@ -17,9 +28,8 @@ exports.getAllTours = (req, res) => {
 
 exports.getTour = (req, res) => {
   const id = req.params.id * 1; // convert string to number
-  const tour = tours.find((el) => el.id === id);
 
-  if (!tour) {
+  if (!tours) {
     return res.status(404).json({
       status: 'fail',
       message: 'Invalid ID',
@@ -29,12 +39,12 @@ exports.getTour = (req, res) => {
   res.status(200).json({
     status: 'Sucess',
     data: {
-      tour,
+      tours,
     },
   });
 };
 
-exports.newTour = (req, res) => {
+exports.createTour = (req, res) => {
   const newId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newId }, req.body); // Create a new tour object with the new ID and request body
 
@@ -55,17 +65,9 @@ exports.newTour = (req, res) => {
 
 exports.updateTour = (req, res) => {
   const id = req.params.id * 1; // convert string to number
-  const tour = tours.find((el) => el.id === id);
-
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
 
   // Update the tour with the new data from the request body
-  Object.assign(tour, req.body);
+  Object.assign(tours, req.body);
 
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
@@ -82,13 +84,6 @@ exports.updateTour = (req, res) => {
 };
 exports.deleteTour = (req, res) => {
   console.log(req.params);
-  const id = req.params.id * 1;
-  if (id > tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
 
   res.status(204).json({
     status: 'success',
@@ -97,4 +92,3 @@ exports.deleteTour = (req, res) => {
     },
   });
 };
-
