@@ -9,8 +9,9 @@ const app = express();
 //middlewares
 app.use(morgan('dev')); // Logging middleware for development
 app.use(express.json());
+app.use(express.static(`${__dirname}/public`)); // Serve static files from the public directory
 
-app.use((req, res, next) => { 
+app.use((req, res, next) => {
   console.log('Hello from the middle ware ');
   next();
 });
@@ -29,7 +30,6 @@ app.get('/', (req, res) => {
     .json({ message: 'Hello from the server side!', App: 'Natours' });
 });
 
-
 // Routes
 
 //creating a new middleware for easy read and solveable routing sollution
@@ -38,4 +38,4 @@ app.get('/', (req, res) => {
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
-module.exports = app
+module.exports = app;
