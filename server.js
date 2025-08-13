@@ -1,9 +1,21 @@
-const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv').config({ path: './.env' });
 const app = require('./app');
 
-dotenv.config({ path: './.env' });
-// console.log(app.get('env'));
-// console.log(process.env); // This will log the current environment, e.g., 'development' or 'production'
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASEPASSWORD,
+);
+
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((con) => {
+    console.log('DB connection successful!');
+  });
+
 
 // Start the server
 const port = process.env.PORT || 3000;

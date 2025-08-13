@@ -4,7 +4,7 @@
   "description": "learning node express and mongo",
   "main": "app.js",
   "scripts": {
-    "startdev": "node --watch server.js",
+    "start": "node --watch server.js",
     "startProd": "NODE_ENV=production node server.js",
     "run dev": "server.js"
   },
@@ -13,6 +13,7 @@
   "dependencies": {
     "dotenv": "^17.2.1",
     "express": "^4.21.2",
+    "mongoose": "^8.17.1",
     "mongose": "^0.0.2-security",
     "morgan": "^1.10.1"
   },
