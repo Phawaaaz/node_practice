@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-````;
 
 const tourSchema = new mongoose.Schema(
   {
@@ -68,11 +67,6 @@ tourSchema.virtual('durationWeeks').get(function () {
 // Document middleware: run before .save() and .create()
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
-  next();
-});
-tourSchema.pre(/^find/, function (next) {
-  this.find({ secretTour: { $ne: true } }); // Exclude secret tours
-  this.start = Date.now();
   next();
 });
 tourSchema.post('save', function (doc, next) {
