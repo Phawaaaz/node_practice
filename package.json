@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --watch server.js",
     "startProd": "NODE_ENV=production node server.js",
-    "run dev": "server.js"
+    "run dev": "server.js",
+    "debug": "ndb server.js"
   },
   "author": "Akinola Fawaz",
   "license": "ISC",
