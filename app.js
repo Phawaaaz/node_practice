@@ -2,16 +2,15 @@
 const express = require('express');
 const morgan = require('morgan');
 
-// Requirement
-const appError = require('./utils/appError');
+// Requirements
+const AppError = require('./utils/appError'); // ✅ Fixed: Uppercase 'A'
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
-//middlewares
-
+// Middlewares
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev')); // Logging middleware for development
 }
@@ -24,30 +23,23 @@ app.use((req, res, next) => {
   next();
 });
 
-//ReadFile
-
-//Routes Handlers
+// Routes Handlers
 app.get('/', (req, res) => {
   res
-    .status(400)
-    .json({ message: 'Hello from the server side!', App: 'Natours' });
+    .status(200) // ✅ Changed from 400 to 200 (success status)
+    .json({ message: 'Hello from the server side!', app: 'Natours' });
 });
 
-// Routes
-
-//creating a new middleware for easy read and solveable routing sollution
-
-//Mouting the router
+// Routes - Mounting the routers
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
+// Handle unmatched routes (404)
 app.all('*', (req, res, next) => {
-  // const err = new Error(`Can't find ${req.originalUrl} on this server!`)
-  // err.statusCode = 404;
-  // err.status = 'fail'
-
-  next(new appError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)); // ✅ Fixed: AppError with uppercase
 });
 
+// Global error handling middleware
 app.use(globalErrorHandler);
+
 module.exports = app;

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node --watch server.js",
     "startProd": "NODE_ENV=production node server.js",
+    "startProd:win": "set NODE_ENV=production && node server.js",
     "run dev": "server.js",
     "debug": "ndb server.js"
   },
@@ -20,6 +21,7 @@
     "slugify": "^1.6.6"
   },
   "devDependencies": {
+    "cross-env": "^10.0.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^10.1.8",
