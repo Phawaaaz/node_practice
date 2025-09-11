@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 // Requirements
-const AppError = require('./utils/appError'); // ✅ Fixed: Uppercase 'A'
+const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
