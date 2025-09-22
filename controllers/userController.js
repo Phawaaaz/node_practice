@@ -34,16 +34,25 @@ exports.createUser = (req, res) => {
   });
 };
 
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!',
+exports.updateUser = catchAsync( async(req, res) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.params.body)
+ res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
+    },
   });
-};
+});
 
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!',
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
   });
-};
+});
